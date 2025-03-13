@@ -14,7 +14,7 @@ import { JwtAuthGuard } from './jwt-auth.guard';
         PassportModule,
         JwtModule.register({
             secret: process.env.JWT_SECRET || process.env.JWT_SECRET,
-            signOptions: { expiresIn: '1h' },
+            signOptions: { expiresIn: '5d' },
         }),
         forwardRef(() => StudentsModule),
         forwardRef(() => InstructorsModule)

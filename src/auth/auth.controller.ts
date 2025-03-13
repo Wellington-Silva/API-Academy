@@ -7,7 +7,8 @@ export class AuthController {
 
     @Post('login')
     async login(@Body() body: { email: string; password: string }) {
-        const student = await this.authService.validateStudent(body.email, body.password);
-        return this.authService.login(student);
-    }
+        const user = await this.authService.validateUser(body.email, body.password);
+        return this.authService.login(user);
+    };
+    
 };

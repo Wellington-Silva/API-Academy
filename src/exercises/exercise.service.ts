@@ -22,7 +22,7 @@ export class ExercisesService {
         private readonly studentsService: StudentsService,
     ) { }
 
-    async create(instructorId: string, studentId: string, name: string, description?: string) {
+    async create(instructorId: string, studentId: string, name: string, muscleGroup: string, description?: string) {
         // Verificar se o instrutor existe
         const instructor = await this.instructorRepository.findOne({ where: { id: instructorId } });
         if (!instructor) {
@@ -39,12 +39,13 @@ export class ExercisesService {
         const exercise = this.exerciseRepository.create({
             name,
             description,
+            muscleGroup,
             student,
             instructor,
         });
 
         return await this.exerciseRepository.save(exercise);
-    }
+    };
 
     async listAll(): Promise<Exercise[]> {
         return this.exerciseRepository.find();

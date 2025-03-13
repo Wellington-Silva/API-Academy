@@ -10,13 +10,14 @@ export class ExercisesController {
 
     @UseGuards(JwtAuthGuard)
     @Post()
-    async createExercise(@Req() req: Request, @Body() body: { studentId: string; name: string; description?: string }) {
+    async createExercise(@Req() req: Request, @Body() body: { studentId: string; name: string; description?: string, muscleGroup: string }) {
         if (!body.studentId) throw new BadRequestException('O campo studentId é obrigatório.');
         
         const instructorId = (req as unknown as CustomRequest).user?.id;
+        console.log(instructorId);
         if (!instructorId) throw new UnauthorizedException('Instrutor não autenticado.');
 
-        return this.exercisesService.create(instructorId, body.studentId, body.name, body.description);
+        return this.exercisesService.create(instructorId, body.studentId, body.name, body.muscleGroup, body.description);
     };
 
     @Get()

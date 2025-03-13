@@ -1,26 +1,16 @@
-import { Injectable, CanActivate, ExecutionContext, UnauthorizedException } from '@nestjs/common';
-import { JwtService } from '@nestjs/jwt';
-import { CustomRequest } from './custom-request';
+import { Injectable, ExecutionContext, UnauthorizedException } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
 
 @Injectable()
-export class JwtAuthGuard implements CanActivate {
-    constructor(private jwtService: JwtService) { }
-
-    canActivate(context: ExecutionContext): boolean {
-        const request = context.switchToHttp().getRequest() as CustomRequest;
-        const authHeader = request.headers.authorization;
-
-        if (!authHeader) {
-            throw new UnauthorizedException('Token não fornecido');
-        }
-
-        const token = authHeader.split(' ')[1]; // Pegando o token após "Bearer"
-        try {
-            const decoded = this.jwtService.verify(token);
-            request.user = decoded; // Atribui o usuário ao request
-            return true;
-        } catch (error) {
-            throw new UnauthorizedException('Token inválido');
-        }
+export class JwtAuthGuard extends AuthGuard('jwt') {
+    canActivate(context: ExecutionContext) {
+        return super.canActivate(context);
     }
-};
+
+    handleRequest(err, user) {
+        if (err || !user) {
+            throw new UnauthorizedException('Token inválido ou expirado');
+        }
+        return user;
+    }
+}

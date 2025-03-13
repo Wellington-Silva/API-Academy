@@ -18,7 +18,7 @@ export class StudentsController {
         return await this.studentsService.getById(id);
     };
 
-    @Get()
+    @Get('byEmail')
     async getByEmail(@Query('email') email: string): Promise<Student> {
         return await this.studentsService.findByEmail(email);
     };
