@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import { Module, forwardRef } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
@@ -6,20 +7,21 @@ import { AuthController } from './auth.controller';
 import { StudentsModule } from '../students/students.module';
 import { InstructorsModule } from 'src/instructors/instructors.module'; 
 import { JwtStrategy } from './jwt.strategy';
+import { JwtAuthGuard } from './jwt-auth.guard';
 
 @Module({
     imports: [
         PassportModule,
         JwtModule.register({
-            secret: process.env.JWT_SECRET || 'secret_key',
+            secret: process.env.JWT_SECRET || process.env.JWT_SECRET,
             signOptions: { expiresIn: '1h' },
         }),
         forwardRef(() => StudentsModule),
         forwardRef(() => InstructorsModule)
     ],
     controllers: [AuthController],
-    providers: [AuthService, JwtStrategy],
-    exports: [AuthService],
+    providers: [AuthService, JwtStrategy, JwtAuthGuard],
+    exports: [AuthService, JwtModule, JwtAuthGuard],
 })
 
 export class AuthModule { };

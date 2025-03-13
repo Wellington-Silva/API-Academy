@@ -2,14 +2,19 @@ import * as bcrypt from 'bcrypt';
 import { AuthService } from '../auth/auth.service';
 import { Student } from './entities/student.entity';
 import { StudentsRepository } from './repositories/students.repository';
-import { Injectable, NotFoundException, ConflictException,  Inject, forwardRef  } from '@nestjs/common';
+import { Injectable, NotFoundException, ConflictException, Inject, forwardRef } from '@nestjs/common';
+import { ExercisesService } from 'src/exercises/exercise.service';
 
 @Injectable()
 export class StudentsService {
     constructor(
         private readonly studentsRepository: StudentsRepository,
+
         @Inject(forwardRef(() => AuthService))
-        private readonly authService: AuthService
+        private readonly authService: AuthService,
+
+        @Inject(forwardRef(() => ExercisesService))
+        private readonly exercisesService: ExercisesService,
     ) { };
 
     async list(): Promise<Student[]> {

@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, OneToMany } from 'typeorm';
+import { Exercise } from "../../exercises/entities/exercise.entity";
 
 export enum UserRole {
     STUDENT = 0,
@@ -34,4 +35,7 @@ export class Instructor {
 
     @UpdateDateColumn()
     updatedAt: Date;
+
+    @OneToMany(() => Exercise, (exercise) => exercise.instructor)
+    exercises: Exercise[];
 };
