@@ -1,10 +1,11 @@
-import { Injectable, UnauthorizedException, Inject, forwardRef } from '@nestjs/common';
-import { JwtService } from '@nestjs/jwt';
-import { StudentsService } from '../students/students.service';
 import * as bcrypt from 'bcrypt';
-import { InstructorsService } from '../instructors/instructors.service';
+import { JwtService } from '@nestjs/jwt';
+import { AuthRepository } from './repositories/auth.reposity';
+import { StudentsService } from '../students/students.service';
 import { Student } from 'src/students/entities/student.entity';
+import { InstructorsService } from '../instructors/instructors.service';
 import { Instructor } from 'src/instructors/entities/instructor.entity';
+import { Injectable, UnauthorizedException, Inject, forwardRef } from '@nestjs/common';
 
 @Injectable()
 export class AuthService {
@@ -16,15 +17,12 @@ export class AuthService {
         private readonly instructorsService: InstructorsService,
 
         private readonly jwtService: JwtService,
+
+        private readonly authRepository: AuthRepository
     ) { }
 
     async validateUser(email: string, password: string) {
-        let user: Student | Instructor | null = await this.studentsService.findByEmail(email);
-    
-        if (!user) {
-            user = await this.instructorsService.getByEmail(email);
-        }
-    
+        const user = await this.authRepository.findUserByEmail(email);
         if (!user) throw new UnauthorizedException('Email ou senha inválidos');
     
         const isPasswordValid = await bcrypt.compare(password, user.password);
@@ -47,4 +45,4 @@ export class AuthService {
         };
     };
     
-}
+};

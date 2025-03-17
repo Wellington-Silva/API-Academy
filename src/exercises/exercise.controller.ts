@@ -20,18 +20,22 @@ export class ExercisesController {
         return this.exercisesService.create(instructorId, body.studentId, body.name, body.muscleGroup, body.description);
     };
 
+    @UseGuards(JwtAuthGuard)
     @Get()
     async getAllExercises(): Promise<Exercise[]> {
         return this.exercisesService.listAll();
-    }
+    };
 
+    @UseGuards(JwtAuthGuard)
     @Get('student')
     async getExercisesByStudent(@Query('studentId') studentId: string): Promise<Exercise[]> {
         return this.exercisesService.getExercisesByStudent(studentId);
-    }
+    };
 
+    @UseGuards(JwtAuthGuard)
     @Get('instructor')
     async getExercisesByInstructor(@Query('instructorId') instructorId: string): Promise<Exercise[]> {
         return this.exercisesService.getExercisesByInstructor(instructorId);
-    }
-}
+    };
+
+};

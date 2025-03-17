@@ -8,6 +8,7 @@ import { StudentsModule } from '../students/students.module';
 import { InstructorsModule } from 'src/instructors/instructors.module'; 
 import { JwtStrategy } from './jwt.strategy';
 import { JwtAuthGuard } from './jwt-auth.guard';
+import { AuthRepository } from './repositories/auth.reposity';
 
 @Module({
     imports: [
@@ -20,7 +21,7 @@ import { JwtAuthGuard } from './jwt-auth.guard';
         forwardRef(() => InstructorsModule)
     ],
     controllers: [AuthController],
-    providers: [AuthService, JwtStrategy, JwtAuthGuard],
+    providers: [AuthService, JwtStrategy, JwtAuthGuard, AuthRepository],
     exports: [AuthService, JwtModule, JwtAuthGuard],
 })
 

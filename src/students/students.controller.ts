@@ -2,11 +2,13 @@ import { Controller, Post, Get, Body, Param, Query, UseGuards } from '@nestjs/co
 import { StudentsService } from './students.service';
 import { Student } from './entities/student.entity';
 import { AuthGuard } from '@nestjs/passport';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
 @Controller('students')
 export class StudentsController {
     constructor(private readonly studentsService: StudentsService) { }
 
+    @UseGuards(JwtAuthGuard)
     @Get()
     async list(): Promise<Student[]> {
         return await this.studentsService.list();
@@ -18,6 +20,7 @@ export class StudentsController {
         return await this.studentsService.getById(id);
     };
 
+    @UseGuards(JwtAuthGuard)
     @Get('byEmail')
     async getByEmail(@Query('email') email: string): Promise<Student> {
         return await this.studentsService.findByEmail(email);
