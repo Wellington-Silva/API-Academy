@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Query, UseGuards, Req, BadRequestException, UnauthorizedException } from '@nestjs/common';
+import { Controller, Get, Post, Body, Query, UseGuards, Req, BadRequestException, UnauthorizedException, Delete } from '@nestjs/common';
 import { ExercisesService } from './exercise.service';
 import { Exercise } from './entities/exercise.entity';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
@@ -36,6 +36,11 @@ export class ExercisesController {
     @Get('instructor')
     async getExercisesByInstructor(@Query('instructorId') instructorId: string): Promise<Exercise[]> {
         return this.exercisesService.getExercisesByInstructor(instructorId);
+    };
+
+    @Delete()
+    async delete(@Query('exerciseId') exerciseId: string) {
+        return this.exercisesService.delete(exerciseId);
     };
 
 };

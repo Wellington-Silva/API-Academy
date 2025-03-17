@@ -65,4 +65,10 @@ export class ExercisesService {
         });
     };
 
+    async delete(exerciseId: string) {
+        const disabledExercise = await this.exerciseRepository.update(exerciseId, { isDisabled: true });
+        if (!disabledExercise.affected) throw new Error("Erro ao desabilitar exercício");
+        return { error: false, message: "Exercício desabilitado com sucesso" }
+    };
+
 };

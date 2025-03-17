@@ -22,6 +22,9 @@ export class Exercise {
     @ManyToOne(() => Instructor, (instructor) => instructor.exercises, { onDelete: 'CASCADE' })
     instructor: Instructor;
 
+    @Column({ default: false })
+    isDisabled: boolean;
+
     @CreateDateColumn()
     createdAt: Date;
 
