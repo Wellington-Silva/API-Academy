@@ -18,7 +18,9 @@ export class StudentsService {
     ) { };
 
     async list(): Promise<Student[]> {
-        return await this.studentsRepository.findAll();
+        const students = await this.studentsRepository.findAll();
+        if (!students) throw new NotFoundException('Nenhum aluno encontrado');
+        return students;
     };
 
     async getById(id: string): Promise<Student> {
