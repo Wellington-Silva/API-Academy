@@ -22,6 +22,24 @@ export class ExercisesService {
         private readonly studentsService: StudentsService,
     ) { }
 
+    async listAll(): Promise<Exercise[]> {
+        return this.exerciseRepository.find();
+    };
+
+    async getExercisesByStudent(studentId: string): Promise<Exercise[]> {
+        return this.exerciseRepository.find({
+            where: { student: { id: studentId } },
+            relations: ['student'], // Opcional
+        });
+    };
+
+    async getExercisesByInstructor(instructorId: string): Promise<Exercise[]> {
+        return this.exerciseRepository.find({
+            where: { instructor: { id: instructorId } },
+            relations: ['instructor'], // Opcional
+        });
+    };
+
     async create(instructorId: string, studentId: string, name: string, muscleGroup: string, description?: string) {
         // Verificar se o instrutor existe
         const instructor = await this.instructorRepository.findOne({ where: { id: instructorId } });
@@ -47,22 +65,25 @@ export class ExercisesService {
         return await this.exerciseRepository.save(exercise);
     };
 
-    async listAll(): Promise<Exercise[]> {
-        return this.exerciseRepository.find();
-    }
-
-    async getExercisesByStudent(studentId: string): Promise<Exercise[]> {
-        return this.exerciseRepository.find({
-            where: { student: { id: studentId } },
-            relations: ['student'], // Opcional
+    async listExercisesCompleteds(studentId: string) {
+        const completedsExercises = await this.exerciseRepository.find({
+            where: { 
+                student: { id: studentId }, 
+                completed: true 
+            }
         });
+    
+        if (completedsExercises.length === 0) {
+            throw new NotFoundException("Nenhum exercício concluído encontrado.");
+        }
+    
+        return completedsExercises;
     };
 
-    async getExercisesByInstructor(instructorId: string): Promise<Exercise[]> {
-        return this.exerciseRepository.find({
-            where: { instructor: { id: instructorId } },
-            relations: ['instructor'], // Opcional
-        });
+    async complete(exerciseId: string) {
+        const completedExercise =  await this.exerciseRepository.update(exerciseId, { completed: true });
+        if (!completedExercise.affected) throw new Error("Não foi possível concluír este exercício");
+        return { error: false, message: "Exercísio concluído com sucesso" };
     };
 
     async delete(exerciseId: string) {

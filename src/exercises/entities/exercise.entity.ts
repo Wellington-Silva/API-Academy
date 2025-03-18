@@ -16,6 +16,9 @@ export class Exercise {
     @Column()
     muscleGroup: string;
 
+    @Column({ default: false })
+    completed: boolean;
+
     @ManyToOne(() => Student, (student) => student.exercises, { onDelete: 'CASCADE' })
     student: Student;
 
