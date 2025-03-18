@@ -1,10 +1,10 @@
 import { Repository } from 'typeorm';
-import { ForbiddenException, forwardRef, Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Exercise } from './entities/exercise.entity';
 import { Student } from 'src/students/entities/student.entity';
-import { Instructor } from 'src/instructors/entities/instructor.entity';
 import { StudentsService } from 'src/students/students.service';
+import { Instructor } from 'src/instructors/entities/instructor.entity';
+import { ForbiddenException, forwardRef, Inject, Injectable, NotFoundException } from '@nestjs/common';
 
 @Injectable()
 export class ExercisesService {
@@ -18,7 +18,7 @@ export class ExercisesService {
         @InjectRepository(Instructor)
         private readonly instructorRepository: Repository<Instructor>,
 
-        @Inject(forwardRef(() => StudentsService)) // 🔥 Resolver a injeção circular
+        @Inject(forwardRef(() => StudentsService))
         private readonly studentsService: StudentsService,
     ) { }
 
@@ -29,7 +29,7 @@ export class ExercisesService {
     async getExercisesByStudent(studentId: string): Promise<Exercise[]> {
         return this.exerciseRepository.find({
             where: { student: { id: studentId } },
-            relations: ['student'], // Opcional
+            relations: ['student']
         });
     };
 
@@ -41,19 +41,16 @@ export class ExercisesService {
     };
 
     async create(instructorId: string, studentId: string, name: string, muscleGroup: string, description?: string) {
-        // Verificar se o instrutor existe
         const instructor = await this.instructorRepository.findOne({ where: { id: instructorId } });
         if (!instructor) {
             throw new ForbiddenException('Apenas instrutores podem criar exercícios.');
-        }
+        };
 
-        // Verificar se o aluno existe
         const student = await this.studentRepository.findOne({ where: { id: studentId } });
         if (!student) {
             throw new NotFoundException('Aluno não encontrado.');
-        }
+        };
 
-        // Criar o exercício
         const exercise = this.exerciseRepository.create({
             name,
             description,

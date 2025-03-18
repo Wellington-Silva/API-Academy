@@ -8,7 +8,7 @@ export class StudentsRepository {
     constructor(
         @InjectRepository(Student)
         private readonly repository: Repository<Student>,
-    ) { }
+    ) { };
 
     async create(studentData: Partial<Student>): Promise<Student> {
         const student = this.repository.create(studentData);

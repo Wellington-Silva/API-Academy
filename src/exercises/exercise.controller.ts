@@ -1,8 +1,8 @@
-import { Controller, Get, Post, Body, Query, UseGuards, Req, BadRequestException, UnauthorizedException, Delete, Put } from '@nestjs/common';
 import { ExercisesService } from './exercise.service';
 import { Exercise } from './entities/exercise.entity';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { CustomRequest } from 'src/auth/custom-request';
+import { Controller, Get, Post, Body, Query, UseGuards, Req, BadRequestException, UnauthorizedException, Delete, Put } from '@nestjs/common';
 
 @Controller('exercises')
 export class ExercisesController {

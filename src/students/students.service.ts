@@ -1,9 +1,9 @@
 import * as bcrypt from 'bcrypt';
 import { AuthService } from '../auth/auth.service';
 import { Student } from './entities/student.entity';
+import { ExercisesService } from 'src/exercises/exercise.service';
 import { StudentsRepository } from './repositories/students.repository';
 import { Injectable, NotFoundException, ConflictException, Inject, forwardRef } from '@nestjs/common';
-import { ExercisesService } from 'src/exercises/exercise.service';
 
 @Injectable()
 export class StudentsService {
@@ -29,6 +29,12 @@ export class StudentsService {
         return student;
     };
 
+    async findByEmail(email: string) {
+        const student = await this.studentsRepository.findByEmail(email);
+        if (!student) throw new NotFoundException("Aluno não encontrado");
+        return student;
+    };
+
     async create(name: string, email: string, password: string): Promise<{ access_token: string }> {
         const existing = await this.studentsRepository.findByEmail(email);
         if (existing) throw new ConflictException('Email já cadastrado');
@@ -38,11 +44,5 @@ export class StudentsService {
 
         return this.authService.generateToken(student);
     };
-
-    async findByEmail(email: string) {
-        const student = await this.studentsRepository.findByEmail(email);
-        if (!student) throw new NotFoundException("Aluno não encontrado");
-        return student;
-    }
 
 };

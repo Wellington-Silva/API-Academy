@@ -1,8 +1,8 @@
 import 'dotenv/config';
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { Student } from '../students/entities/student.entity';
-import { Instructor } from '../instructors/entities/instructor.entity';
 import { Exercise } from 'src/exercises/entities/exercise.entity';
+import { Instructor } from '../instructors/entities/instructor.entity';
 
 export const typeOrmConfig: TypeOrmModuleOptions = {
     type: 'postgres',
