@@ -1,7 +1,8 @@
 import * as bcrypt from 'bcrypt';
 import { AuthService } from '../auth/auth.service';
-import { Injectable, ConflictException, Inject, forwardRef } from '@nestjs/common';
+import { Injectable, ConflictException, Inject, forwardRef, NotFoundException } from '@nestjs/common';
 import { InstructorsRepository } from './repositories/instructors.repository';
+import { Instructor } from './entities/instructor.entity';
 
 @Injectable()
 export class InstructorsService {
@@ -13,7 +14,13 @@ export class InstructorsService {
 
     async list() {
         return await this.instructorsRepo.listAll();
-    }
+    };
+
+    async getById(instructorId: string): Promise<Instructor> {
+        const instructor = await this.instructorsRepo.getById(instructorId);
+        if (!instructor) throw new NotFoundException("Instrutor não encontrado");
+        return instructor;
+    };
 
     async register(name: string, email: string, password: string) {
         const existing = await this.instructorsRepo.getByEmail(email);
@@ -26,7 +33,9 @@ export class InstructorsService {
     };
 
     async getByEmail(email: string) {
-        return this.instructorsRepo.getByEmail(email);
+        const instructor = await this.instructorsRepo.getByEmail(email);
+        if (!instructor) throw new NotFoundException('Instrutor não encontrado');
+        return instructor;
     };
 
 };
