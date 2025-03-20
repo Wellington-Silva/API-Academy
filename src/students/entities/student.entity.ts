@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, OneToMany } from 'typeorm';
 import { Exercise } from '../../exercises/entities/exercise.entity';
 

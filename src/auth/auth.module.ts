@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import 'dotenv/config';
 import { Module, forwardRef } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';

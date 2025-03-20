@@ -1,8 +1,8 @@
-import { Controller, Post, Get, Body, Param, Query, UseGuards } from '@nestjs/common';
-import { StudentsService } from './students.service';
-import { Student } from './entities/student.entity';
 import { AuthGuard } from '@nestjs/passport';
-import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { Student } from './entities/student.entity';
+import { StudentsService } from './students.service';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
+import { Controller, Post, Get, Body, Param, Query, UseGuards } from '@nestjs/common';
 
 @Controller('students')
 export class StudentsController {

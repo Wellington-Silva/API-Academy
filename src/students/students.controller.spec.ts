@@ -1,32 +1,49 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { StudentsController } from './students.controller';
 import { StudentsService } from './students.service';
+import { ExecutionContext } from '@nestjs/common';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
+import { AuthService } from '../auth/auth.service';
 
 describe('StudentsController', () => {
     let studentsController: StudentsController;
-    let studentsService: StudentsService;
 
-    beforeEach(async () => {
+    beforeAll(async () => {
+
+        const mockStudentService = {
+            getById: jest.fn().mockResolvedValue({
+                id: '1',
+                name: 'Wellington Silva',
+                email: 'wellingtonsilva@gmail.com',
+            })
+        };
+
+        const mockAuthService = {
+            validateUser: jest.fn().mockResolvedValue(true),
+        };
+
+        const mockJwtAuthGuard = {
+            canActivate: jest.fn().mockImplementation((context: ExecutionContext) => {
+                return true;
+            }),
+        };
+
         const module: TestingModule = await Test.createTestingModule({
             controllers: [StudentsController],
             providers: [
-                {
-                    provide: StudentsService,
-                    useValue: {
-                        create: jest.fn(),
-                        getById: jest.fn(),
-                        getByEmail: jest.fn(),
-                        list: jest.fn(),
-                    },
-                },
+                { provide: StudentsService, useValue: mockStudentService },
+                { provide: AuthService, useValue: mockAuthService },
             ],
-        }).compile();
+        })
+            .overrideGuard(JwtAuthGuard)
+            .useValue(mockJwtAuthGuard)
+            .compile();
 
         studentsController = module.get<StudentsController>(StudentsController);
-        studentsService = module.get<StudentsService>(StudentsService);
     });
 
     it('should be defined', () => {
         expect(studentsController).toBeDefined();
     });
+
 });

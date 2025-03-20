@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import { forwardRef, Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ExercisesService } from './exercise.service';

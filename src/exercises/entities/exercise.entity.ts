@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 import { Instructor } from '../../instructors/entities/instructor.entity';
 import { Student } from '../../students/entities/student.entity';

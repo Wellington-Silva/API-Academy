@@ -1,9 +1,9 @@
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Exercise } from './entities/exercise.entity';
-import { Student } from 'src/students/entities/student.entity';
-import { StudentsService } from 'src/students/students.service';
-import { Instructor } from 'src/instructors/entities/instructor.entity';
+import { Student } from '../students/entities/student.entity';
+import { StudentsService } from '../students/students.service';
+import { Instructor } from '../instructors/entities/instructor.entity';
 import { ForbiddenException, forwardRef, Inject, Injectable, NotFoundException } from '@nestjs/common';
 
 @Injectable()

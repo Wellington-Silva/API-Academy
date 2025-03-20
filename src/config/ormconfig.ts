@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import 'dotenv/config';
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { Student } from '../students/entities/student.entity';

@@ -1,7 +1,7 @@
 import * as bcrypt from 'bcrypt';
 import { AuthService } from '../auth/auth.service';
 import { Student } from './entities/student.entity';
-import { ExercisesService } from 'src/exercises/exercise.service';
+import { ExercisesService } from '../exercises/exercise.service';
 import { StudentsRepository } from './repositories/students.repository';
 import { Injectable, NotFoundException, ConflictException, Inject, forwardRef } from '@nestjs/common';
 
