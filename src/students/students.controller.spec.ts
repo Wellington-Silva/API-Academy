@@ -1,22 +1,14 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import { StudentsController } from './students.controller';
-import { StudentsService } from './students.service';
 import { ExecutionContext } from '@nestjs/common';
-import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { AuthService } from '../auth/auth.service';
+import { Test, TestingModule } from '@nestjs/testing';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
+import { StudentsController } from './students.controller';
+import { studentMock, studentServiceMock } from "./student.service.mock"
 
 describe('StudentsController', () => {
     let studentsController: StudentsController;
 
     beforeAll(async () => {
-
-        const mockStudentService = {
-            getById: jest.fn().mockResolvedValue({
-                id: '1',
-                name: 'Wellington Silva',
-                email: 'wellingtonsilva@gmail.com',
-            })
-        };
 
         const mockAuthService = {
             validateUser: jest.fn().mockResolvedValue(true),
@@ -31,7 +23,7 @@ describe('StudentsController', () => {
         const module: TestingModule = await Test.createTestingModule({
             controllers: [StudentsController],
             providers: [
-                { provide: StudentsService, useValue: mockStudentService },
+                studentServiceMock,
                 { provide: AuthService, useValue: mockAuthService },
             ],
         })
@@ -44,6 +36,31 @@ describe('StudentsController', () => {
 
     it('should be defined', () => {
         expect(studentsController).toBeDefined();
+    });
+
+    it ('should get users', async ()=> {
+        const result = await studentsController.list();
+        expect(result.length).toEqual(1);
+        expect(result[0].id).toEqual(studentMock.id);
+    });
+
+    it ('should get user by id', async ()=> {
+        const result = await studentsController.getById(studentMock.id);
+        expect(result).toEqual(studentMock);
+    });
+
+    it ('should get user by email', async ()=> {
+        const result = await studentsController.getByEmail(studentMock.email);
+        expect(result).toEqual(studentMock);
+    });
+
+    it ('should create user', async ()=> {
+        const result = await studentsController.createStudent({ 
+            name: studentMock.name, 
+            email: studentMock.email, 
+            password: studentMock.password 
+        });
+        expect(result).toEqual(studentMock);
     });
 
 });
