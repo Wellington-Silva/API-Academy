@@ -38,23 +38,23 @@ describe('StudentsController', () => {
         expect(studentsController).toBeDefined();
     });
 
-    it ('should get users', async ()=> {
+    it ('should get student', async ()=> {
         const result = await studentsController.list();
         expect(result.length).toEqual(1);
         expect(result[0].id).toEqual(studentMock.id);
     });
 
-    it ('should get user by id', async ()=> {
+    it ('should get student by id', async ()=> {
         const result = await studentsController.getById(studentMock.id);
         expect(result).toEqual(studentMock);
     });
 
-    it ('should get user by email', async ()=> {
+    it ('should get student by email', async ()=> {
         const result = await studentsController.getByEmail(studentMock.email);
         expect(result).toEqual(studentMock);
     });
 
-    it ('should create user', async ()=> {
+    it ('should create student', async ()=> {
         const result = await studentsController.createStudent({ 
             name: studentMock.name, 
             email: studentMock.email, 

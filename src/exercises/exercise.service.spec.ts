@@ -179,7 +179,6 @@ describe('ExerciseService', () => {
     });
 
     it('should mark an exercise as completed successfully', async () => {
-        // Mock do update para simular sucesso
         jest.spyOn(exerciseRepository, 'update').mockResolvedValueOnce({ affected: 1 } as any);
 
         const exerciseId = '123';
@@ -190,7 +189,6 @@ describe('ExerciseService', () => {
     });
 
     it('should throw an error if the exercise does not exist', async () => {
-        // Mock do update para simular falha (nenhuma linha afetada)
         jest.spyOn(exerciseRepository, 'update').mockResolvedValueOnce({ affected: 0 } as any);
 
         const exerciseId = 'invalid-id';
