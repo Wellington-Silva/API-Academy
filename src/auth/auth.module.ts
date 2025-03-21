@@ -9,7 +9,7 @@ import { StudentsModule } from '../students/students.module';
 import { InstructorsModule } from 'src/instructors/instructors.module'; 
 import { JwtStrategy } from './jwt.strategy';
 import { JwtAuthGuard } from './jwt-auth.guard';
-import { AuthRepository } from './repositories/auth.reposity';
+import { AuthRepository } from './repositories/auth.repository';
 
 @Module({
     imports: [

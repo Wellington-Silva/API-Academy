@@ -1,13 +1,13 @@
+import { Repository } from 'typeorm';
+import { getRepositoryToken } from '@nestjs/typeorm';
 import { Test, TestingModule } from '@nestjs/testing';
 import { ExercisesService } from './exercise.service';
-import { StudentsService } from '../students/students.service';
 import { Exercise } from './entities/exercise.entity';
 import { Student } from '../students/entities/student.entity';
-import { Instructor } from '../instructors/entities/instructor.entity';
-import { getRepositoryToken } from '@nestjs/typeorm';
-import { exerciseOneMock, exerciseTwoMock } from './exercise.service.mock';
-import { Repository } from 'typeorm';
+import { StudentsService } from '../students/students.service';
 import { ForbiddenException, NotFoundException } from '@nestjs/common';
+import { Instructor } from '../instructors/entities/instructor.entity';
+import { exerciseOneMock, exerciseTwoMock } from './exercise.service.mock';
 
 describe('ExerciseService', () => {
 

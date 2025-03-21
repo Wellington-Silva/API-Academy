@@ -24,7 +24,6 @@ describe('InstructorsController', () => {
             controllers: [InstructorsController],
             providers: [
                 instructorServiceMock,
-                // { provide: InstructorsService, useValue: mockInstructorsService },
                 { provide: AuthService, useValue: mockAuthService },
             ],
         })

@@ -1,6 +1,6 @@
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
-import { AuthRepository } from './repositories/auth.reposity';
+import { AuthRepository } from './repositories/auth.repository';
 import { Injectable, UnauthorizedException, Inject, forwardRef } from '@nestjs/common';
 
 @Injectable()

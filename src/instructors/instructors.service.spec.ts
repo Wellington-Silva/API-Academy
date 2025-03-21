@@ -1,8 +1,8 @@
+import { NotFoundException } from '@nestjs/common';
+import { AuthService } from '../auth/auth.service';
 import { Test, TestingModule } from '@nestjs/testing';
 import { InstructorsService } from './instructors.service';
 import { InstructorsRepository } from './repositories/instructors.repository';
-import { NotFoundException } from '@nestjs/common';
-import { AuthService } from '../auth/auth.service';
 
 describe('InstructorsService', () => {
     let instructorService: InstructorsService;
@@ -80,7 +80,7 @@ describe('InstructorsService', () => {
     });
 
     it('should register an instructor', async () => {
-        const mockToken = "mocked-jwt-token"; // Token fictício
+        const mockToken = "mocked-jwt-token";
     
         instructorsRepo.getByEmail = jest.fn().mockResolvedValue(null);
     
@@ -88,10 +88,9 @@ describe('InstructorsService', () => {
             id: "1",
             name: "Fabrício Pachalok",
             email: "fabriciopachalok@gmail.com",
-            password: "hashedPassword" // Simulando a senha já criptografada
+            password: "hashedPassword"
         });
-    
-        // Mockando `authService.generateToken` para garantir que retorna um token fixo
+
         authService.generateToken = jest.fn().mockReturnValue({ access_token: mockToken });
     
         const result = await instructorService.register(
@@ -100,17 +99,14 @@ describe('InstructorsService', () => {
             "123@fabricio"
         );
     
-        // Verifica se a função `create` foi chamada corretamente
         expect(instructorsRepo.create).toHaveBeenCalledWith({
             name: "Fabrício Pachalok",
             email: "fabriciopachalok@gmail.com",
-            password: expect.any(String) // O hash da senha deve ser uma string
+            password: expect.any(String)
         });
     
-        // Verifica se o token foi gerado corretamente
         expect(result).toEqual({ access_token: mockToken });
     
-        // Verifica se `authService.generateToken` foi chamado com o instrutor criado
         expect(authService.generateToken).toHaveBeenCalledWith({
             id: "1",
             name: "Fabrício Pachalok",

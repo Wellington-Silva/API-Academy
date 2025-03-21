@@ -1,9 +1,9 @@
+import { NotFoundException } from '@nestjs/common';
 import { AuthService } from '../auth/auth.service';
 import { StudentsService } from './students.service';
 import { Test, TestingModule } from '@nestjs/testing';
 import { ExercisesService } from '../exercises/exercise.service';
 import { StudentsRepository } from './repositories/students.repository';
-import { NotFoundException } from '@nestjs/common';
 
 describe('StudentsService', () => {
 
@@ -98,7 +98,6 @@ describe('StudentsService', () => {
             password: "hashedPassword" // Simulando a senha já criptografada
         });
     
-        // Mockando `authService.generateToken` para garantir que retorna um token fixo
         authService.generateToken = jest.fn().mockReturnValue({ access_token: mockToken });
     
         const result = await studentsService.create(
@@ -107,17 +106,14 @@ describe('StudentsService', () => {
             "123@well"
         );
     
-        // Verifica se a função `create` foi chamada corretamente
         expect(studentsRepository.create).toHaveBeenCalledWith({
             name: "Wellington Silva",
             email: "wellingtonsilva@gmail.com",
-            password: expect.any(String) // O hash da senha deve ser uma string
+            password: expect.any(String)
         });
     
-        // Verifica se o token foi gerado corretamente
         expect(result).toEqual({ access_token: mockToken });
     
-        // Verifica se `authService.generateToken` foi chamado com o instrutor criado
         expect(authService.generateToken).toHaveBeenCalledWith({
             id: "1",
             name: "Wellington Silva",
