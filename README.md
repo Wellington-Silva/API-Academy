@@ -10,8 +10,6 @@ API-Academy é uma API RESTful desenvolvida com NestJS e TypeScript, voltada par
 - [Instalação e Uso](#instalação-e-uso)  
 - [Estrutura do Repositório](#estrutura-do-repositório)  
 - [Contribuição](#contribuição)  
-- [Contato](#contato)  
-- [Licença](#licença)
 
 ---
 
@@ -117,3 +115,10 @@ $ npm run start:prod
 ├── tsconfig.build.json
 └── tsconfig.json
 ```
+
+---
+
+## 📬 Contato
+Wellington Silva   
+📧 Email: wellingtonsilva112000@gmail.com  
+🔗 GitHub: [@Wellington-Silva](https://github.com/Wellington-Silva)
