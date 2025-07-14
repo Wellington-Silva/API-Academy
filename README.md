@@ -17,6 +17,7 @@ API-Academy é uma API RESTful desenvolvida com NestJS e TypeScript, voltada par
 
 - ✅ Endpoints CRUD exemplares (GET, POST, PUT, DELETE) para instrutor.
 - ✅ Endpoints CRUD exemplares para aluno.  
+- ✅ Login como instrutor ou como aluno.  
 - ✅ Testes unitários
 
 ---
