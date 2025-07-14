@@ -1,11 +1,64 @@
+API-Academy é uma API RESTful desenvolvida com NestJS e TypeScript, voltada para o gerenciamento de academias. O projeto foi estruturado com foco em boas práticas de desenvolvimento, arquitetura modular e testes automatizados. Ele oferece uma base sólida para aplicações escaláveis, com autenticação JWT, organização por módulos (como alunos, instrutores e exercícios), e integração com bancos de dados relacionais usando TypeORM.
+
+---
+
+## 📋 Índice
+
+- [Sobre o Projeto](#sobre-o-projeto)  
+- [Funcionalidades](#funcionalidades)  
+- [Tecnologias Utilizadas](#tecnologias-utilizadas)  
+- [Instalação e Uso](#instalação-e-uso)  
+- [Estrutura do Repositório](#estrutura-do-repositório)  
+- [Contribuição](#contribuição)  
+- [Contato](#contato)  
+- [Licença](#licença)
+
+---
+
+## ⚙️ Funcionalidades
+
+- ✅ Endpoints CRUD exemplares (GET, POST, PUT, DELETE) para instrutor.
+- ✅ Endpoints CRUD exemplares para aluno.  
+- ✅ Testes unitários
+
+---
+
+## 🧰 Tecnologias Utilizadas
+
+- Nest.JS
+- Typescript  
+- PostgreSQL + TypeORM
+- JWT para autenticação
+
+---
+
+## 🚀 Instalação e Uso
+
 ```bash
-├── .gitignore
-├── .prettierrc
-├── README.md
-├── eslint.config.mjs
-├── nest-cli.json
-├── package-lock.json
-├── package.json
+# Clone o repositório
+git clone https://github.com/Wellington-Silva/API-Academy.git
+
+# Acesse o diretório do projeto
+cd API-Academy
+
+# Restaure as dependências
+npm install
+
+# Para rodar em desenvolvimento
+$ npm run start
+
+# Para rodar em modo de observação (watch mode)
+$ npm run start:dev
+
+# Para rodar em produção
+$ npm run start:prod
+```
+
+---
+
+## 🗂️ Estrutura do Repositório
+
+```bash
 ├── src
     ├── app.controller.spec.ts
     ├── app.controller.ts
@@ -53,18 +106,14 @@
 ├── test
     ├── app.e2e-spec.ts
     └── jest-e2e.json
+├── .env
+├── .gitignore
+├── .prettierrc
+├── README.md
+├── eslint.config.mjs
+├── nest-cli.json
+├── package-lock.json
+├── package.json
 ├── tsconfig.build.json
 └── tsconfig.json
-```
-## Compile and run the project
-
-```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
 ```
