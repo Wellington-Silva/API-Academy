@@ -1,3 +1,4 @@
+```bash
 ├── .gitignore
 ├── .prettierrc
 ├── README.md
@@ -54,7 +55,7 @@
     └── jest-e2e.json
 ├── tsconfig.build.json
 └── tsconfig.json
-
+```
 ## Compile and run the project
 
 ```bash
